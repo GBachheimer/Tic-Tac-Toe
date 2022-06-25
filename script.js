@@ -1,4 +1,3 @@
-
 const matchPlayer1 = [];
 const matchPlayer2 = [];
 let barDisplay = 0;
@@ -71,7 +70,6 @@ function checkWinner(matchPlayer, player) {
             matchPlayer[6] != 0 && matchPlayer[7] != 0 && matchPlayer[8] != 0) {
             win = 1;
             for (let i = 1; i < 10; ++i) {
-                
                 document.getElementById(i).disabled = true;
             }
         }

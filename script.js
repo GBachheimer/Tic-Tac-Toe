@@ -1,9 +1,11 @@
 
 const matchPlayer1 = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 const matchPlayer2 = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+let barDisplay = 0;
 
 function generateGame() {
     const gameBoard = document.getElementById("root");
+    document.getElementById("messageTop").innerHTML = "X is first! Click to start..."
     for (let i = 1; i < 10; ++i) {
         const button = document.createElement("button");
         button.classList = "btn btn-outline-dark my-1 mx-1 w-25 h-25 d-inline-block";
@@ -13,29 +15,36 @@ function generateGame() {
     }
 }
 
+
 function drawX(id) {
+    let square = document.getElementById(id);
     ++matchPlayer1[id - 1];
     for (let i = 1; i < 10; ++i) {
         document.getElementById(i).onclick = function() { drawO(this.id); };
     }
-    document.getElementById(id).disabled = true;
-    const image = document.getElementById(id).createElement("img");
-    image.src = "x.png";
-    document.getElementById(id).appendChild(image);
-    checkWinner(matchPlayer1, "Player 1");
+    square.disabled = true;
+    square.classList.add("border-0");
+    const image = document.createElement("img");
+    image.src = "x.jpg";
+    image.className = "img-thumbnail border-0";
+    square.appendChild(image);
+    display("O");
+    checkWinner(matchPlayer1, "X");
 }
 
 function drawO(id) {
+    let square = document.getElementById(id);
     ++matchPlayer2[id - 1];
     for (let i = 1; i < 10; ++i) {
         document.getElementById(i).onclick = function() { drawX(this.id); };
     }
-    document.getElementById(id).disabled = true;
-    document.getElementById(id).classList.add("rounded-circle");
-    checkWinner(matchPlayer2, "Player 2");
+    square.disabled = true;
+    square.classList.add("rounded-circle");
+    display("X");
+    checkWinner(matchPlayer2, "O");
 }
 
-function checkWinner(matchPlayer, name) {
+function checkWinner(matchPlayer, player) {
     let win = 0;
     for (let i = 0; i < 10; ++i) {
         if (matchPlayer[0] != 0 && matchPlayer[1] != 0 && matchPlayer[2] != 0 ||
@@ -53,6 +62,16 @@ function checkWinner(matchPlayer, name) {
         }
     }
     if (win) {
-        alert("Winner is " + name + "!");
+        document.getElementById("messageTop").innerHTML = player + " won!";
+        document.getElementById("bar").style.width = "100%";
     }
+}
+
+function display(letter) {
+    barDisplay += 12;
+    if (barDisplay > 100) {
+        barDisplay = 100;
+    }
+    document.getElementById("messageTop").innerHTML = "Is " + letter + " turn.";
+    document.getElementById("bar").style.width = barDisplay + "%";
 }

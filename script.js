@@ -1,10 +1,18 @@
-
-const matchPlayer1 = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-const matchPlayer2 = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+const matchPlayer1 = [];
+const matchPlayer2 = [];
 let barDisplay = 0;
+let scoreX = 0;
+let scoreO = 0;
 
 function generateGame() {
     const gameBoard = document.getElementById("root");
+    gameBoard.replaceChildren();
+    for (let i = 0; i < 10; ++i) {
+        matchPlayer1[i] = 0;
+        matchPlayer2[i] = 0;
+    }
+    barDisplay = 0;
+    document.getElementById("bar").style.width = barDisplay + "%";
     document.getElementById("messageTop").innerHTML = "X is first! Click to start..."
     for (let i = 1; i < 10; ++i) {
         const button = document.createElement("button");
@@ -13,6 +21,8 @@ function generateGame() {
         button.id = i;
         gameBoard.appendChild(button);
     }
+    document.getElementById("resetB").onclick = function() { reset(); };
+    document.getElementById("resetB").innerHTML = "Next match";
 }
 
 
@@ -62,6 +72,11 @@ function checkWinner(matchPlayer, player) {
         }
     }
     if (win) {
+        if (player === "O") {
+            ++scoreO;
+        } else {
+            ++scoreX;
+        }
         document.getElementById("messageTop").innerHTML = player + " won!";
         document.getElementById("bar").style.width = "100%";
     }
@@ -74,4 +89,17 @@ function display(letter) {
     }
     document.getElementById("messageTop").innerHTML = "Is " + letter + " turn.";
     document.getElementById("bar").style.width = barDisplay + "%";
+}
+
+function reset() {
+    generateGame();
+    for (let i = 1; i < 10; ++i) {
+        document.getElementById(i).onclick = function() { drawO(this.id); };
+        document.getElementById(i).replaceChildren();
+        document.getElementById(i).disabled = false;
+        document.getElementById(i).className = "btn btn-outline-dark my-1 mx-1 w-25 h-25 d-inline-block";
+    }
+    document.getElementById("messageTop").innerHTML = "This time O is first! Click to start...";
+    const button = document.getElementById("resetB");
+    button.onclick = function() { generateGame(); };
 }

@@ -7,17 +7,17 @@ let scoreO = 0;
 function generateGame() {
     const gameBoard = document.getElementById("root");
     gameBoard.replaceChildren();
-    for (let i = 0; i < 10; ++i) {
+    for (let i = 0; i < 9; ++i) {
         matchPlayer1[i] = 0;
         matchPlayer2[i] = 0;
     }
     barDisplay = 0;
     document.getElementById("bar").style.width = barDisplay + "%";
     document.getElementById("resetScore").style.display = "inline";
-    document.getElementById("messageTop").innerHTML = "X is first! Choose wisely!"
+    document.getElementById("messageTop").innerHTML = "X is first! Choose wisely!";
     for (let i = 1; i < 10; ++i) {
         const button = document.createElement("button");
-        button.classList = "btn btn-outline-dark my-3 mx-3 w-25 h-25 d-inline-block";
+        button.classList = "btn btn-outline-dark my-1 mx-1 w-25 h-25 d-inline-block";
         button.onclick = function () { drawX(this.id); };
         button.id = i;
         gameBoard.appendChild(button);
@@ -25,7 +25,6 @@ function generateGame() {
     document.getElementById("resetB").onclick = function() { reset(); };
     document.getElementById("resetB").innerHTML = "Next match";
 }
-
 
 function drawX(id) {
     let square = document.getElementById(id);
@@ -77,10 +76,10 @@ function checkWinner(matchPlayer, player) {
     if (win) {
         if (player === "O") {
             ++scoreO;
-            document.getElementById("OScore").innerHTML = "O has: " + scoreO + " points";
+            document.getElementById("OScore").innerHTML = scoreO;
         } else {
             ++scoreX;
-            document.getElementById("XScore").innerHTML = "X has: " + scoreX + " points";
+            document.getElementById("XScore").innerHTML = scoreX;
         }
         document.getElementById("messageTop").innerHTML = player + " won!";
         document.getElementById("bar").style.width = "100%";
@@ -89,12 +88,12 @@ function checkWinner(matchPlayer, player) {
     }
 }
 
-function display(letter) {
+function display(player) {
     barDisplay += 12;
     if (barDisplay > 100) {
         barDisplay = 100;
     }
-    document.getElementById("messageTop").innerHTML = "Is " + letter + " turn.";
+    document.getElementById("messageTop").innerHTML = "Is " + player + " turn.";
     document.getElementById("bar").style.width = barDisplay + "%";
 }
 
@@ -104,7 +103,7 @@ function reset() {
         document.getElementById(i).onclick = function() { drawO(this.id); };
         document.getElementById(i).replaceChildren();
         document.getElementById(i).disabled = false;
-        document.getElementById(i).className = "btn btn-outline-dark my-3 mx-3 w-25 h-25 d-inline-block";
+        document.getElementById(i).className = "btn btn-outline-dark my-1 mx-1 w-25 h-25 d-inline-block";
     }
     document.getElementById("messageTop").innerHTML = "This time O is first! Good luck!";
     const button = document.getElementById("resetB");
@@ -115,7 +114,7 @@ function resetScore() {
     reset();
     scoreX = 0;
     scoreO = 0;
-    document.getElementById("messageTop").innerHTML = "The score was reset!";
-    document.getElementById("OScore").innerHTML = "O has: " + scoreO + " points";
-    document.getElementById("XScore").innerHTML = "X has: " + scoreX + " points";
+    document.getElementById("messageTop").innerHTML = "The score was reset! O is first. Choose wisely!";
+    document.getElementById("OScore").innerHTML = scoreO;
+    document.getElementById("XScore").innerHTML = scoreX;
 }

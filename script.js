@@ -35,7 +35,7 @@ function drawX(id) {
     square.disabled = true;
     square.classList.add("border-0");
     const image = document.createElement("img");
-    image.src = "x.jpg";
+    image.src = "X.jpg";
     image.className = "img-thumbnail border-0";
     square.appendChild(image);
     display("O");
